@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
   const [title, setTitle] = useState("");
@@ -32,6 +35,15 @@ const handleSubmit = async (e) => {
         setError(null)
         setEmptyFields([])
         console.log('New workout added',json);
+        toast.success('Workout added..!', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         dispatch({type:'CREATE_WORKOUT',payload: json})
     }
 }
@@ -64,6 +76,18 @@ const handleSubmit = async (e) => {
       />
       <button type="submit">Add Workout</button>
       {error && <div className="error">{error}</div>}
+      <ToastContainer 
+        position="top-center"
+        theme="colored"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </form>
   );
 };
